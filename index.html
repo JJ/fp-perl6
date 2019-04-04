@@ -31,33 +31,73 @@
     src='https://farm8.staticflickr.com/7914/46806908884_b4df834428_k_d.jpg'
     alt='selfie'>
           <aside
-          class='notes'>¿Quién soy yo?</aside></section>
+            class='notes'>¿Quién soy yo?. Programador en Perl desde
+    1993, en Perl 6 desde 2016. Documentador-en-jefe de Perl 6, aunque
+    no existe esa posición y en realidad no soy jefe de nadie, sólo el
+    que se encarga de la documentación; también fui becario de la Perl
+    Foundation para encargarme de ella.</aside></section>
+
+        
 	<section data-background='https://live.staticflickr.com/1812/30183360848_d06e0a11ce_k_d.jpg'>
 	  <h1 class='fragment'>Perl 6 es compilado</h2>
 	  <h2 class='fragment'>✓ Multiparadigma</h2>
 	  <h2 class='fragment'>✓ Concurrente</h2>
-	  <aside class='notes'>Tiene soporte pleno Unicode, gramáticas, y un enfoque coherente. Como lenguaje multiparadigma, tiene prácticamente todo: orientación a objetos con traits y un protocolo para creación de objetos, y es soherente en todos sus aspectos. Lo mejor es probarlo para asegurarse.</aside>
+	  <aside class='notes'>Tiene soporte pleno Unicode,
+    gramáticas, y un enfoque coherente. Como lenguaje multiparadigma,
+    tiene prácticamente todo: orientación a objetos con traits y un
+    protocolo para creación de objetos, y es soherente en todos sus
+    aspectos. Lo mejor es probarlo para asegurarse. Tiene una buena
+    cantidad de libros que lo apoyan, incluyendo el mío, "Learning to
+    program with Perl 6" y el siguiente mío, "Perl 6 quick reference",
+            que saldrá en APress antes de final de año con un poco de suerte</aside>
 	</section>
+        
 	<section data-background='https://live.staticflickr.com/1057/1008475616_cad7d6a780_b_d.jpg'>
 	  <h1>Perl 6 empezó en Haskell</h1>
-	  <aside class='notes'>PUGS, el primer intérprete de Perl 6, lo escribió Audrey Tang en Haskell; ella escribió también uno de los primeros trabajos describiendo el diseño del lenguaje</aside>
+	  <aside class='notes'>PUGS, el primer intérprete de Perl 6,
+	  lo escribió Audrey Tang en Haskell; ella escribió también
+	  uno de los primeros trabajos describiendo el diseño del
+	  lenguaje</aside> 
 	</section>
 
 	<section>
-	  <section data-background='https://live.staticflickr.com/16/22336624_ccf940d11a_o_d.jpg'><h1>Las mónadas me atrajeron a Perl 6</h1>
-	    <aside class='notes'>Las mónadas, según <a href='https://tanami.org/monads/'>esto</a>, hacen dos cosas: simulan estado y además permiten ordenar funciones (ya que en programación funcional las funciones son <em>puras</em>.
+	  <section data-background='https://live.staticflickr.com/7921/46812657474_b8d0df40aa_o_d.jpg'><h1>Las mónadas me atrajeron a Perl 6</h1>
+	    <aside class='notes'>Las mónadas, según <a
+	  href='https://tanami.org/monads/'>esto</a>, hacen dos cosas:
+	  simulan estado y además permiten ordenar funciones (ya que
+	  en programación funcional las funciones son
+	  <em>puras</em>. Pero el tema es que un día, después de algún
+	  tutorial de Haskell donde me enteré de un épsilon más que en
+	  el anterior, me dije
+	  "Hum. ¿Podrán implementarse mónadas en Perl 6?". Encontré un
+	  fichero creado por esta persona, Larry Wall. Era muy
+	  antiguo, para versiones iniciales de Perl 6, en concreto,
+	  las escritas para Pugs, y no funcionaba. Lo arreglé, hice
+	  pull request, y de repente me dieron el commit bit. Y es que
+	  Perl 6 se estuvo desarrollando durante 15 años hasta que se
+	  produjo la primera versión estable. Durante 15 años iba a
+	  estar listo para navidad, pero no se dijo de qué año. Larry
+	  Wall creó Perl en los 80 y fue evolucionando hasta Perl 5,
+	  que se sigue usando ahora. Perl 6 va mucho más allá. Larry
+	  Wall dice que existe la misma relación entre ambos que entre
+	  el Hobbit y el Señor de los Anillos. Están en el mismo
+	  mundo, son lenguajes hermanos, están en la misma
+	  comunidad. Pero como Charmander y Charmeleon, es una
+	  evolución uno de otro.
 	    </aside>
 	  </section>
 
-	  <section>
+        </section>
+          
+	<section><h1>Funciones de primera clase</h1></section>
+	<section><h1><em>Higher order functions</em></h1></section>
+	<section><h1><em>Currying</em></h1></section>
+        <section><h1>Mónadas</h1>
 	    <pre><code># return :: (Monad m) => a -&gt; m a
 sub mreturn($a --&gt; Code ) { return { $a } }
 	    </code></pre>
 	  </section>
 
-	<section><h1>Funciones de primera clase</h1></section>
-	<section><h1><em>Higher order functions</em></h1></section>
-	<section><h1><em>Currying</em></h1></section>
 
 	<section>
 	  <ul class='credits'>
