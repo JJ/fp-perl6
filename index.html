@@ -107,8 +107,39 @@
         igual que en Haskell. Perl 6 usa duck typing. El operador
         rocket hace lo que parece qu ehace, pero en realidad pasa su
         lado derecho como segundo argumento a la función en su derecha.</aside>
+          </section>
+
+          <section><h1>TIMTOWTDI</h1>
+            <pre><code>#!/usr/bin/env perl6
+use v6;
+((1..10) »**» 2 ).duckmap: -> $x where * ≥ 12 { $x.say };
+=output
+16
+25
+....</code></pre>
+          </section>
+
+          <section><h1>Sin test == Roto</h1>
+            <pre><code>language: minimal
+services:
+  - docker
+install:
+  - docker pull jjmerelo/perl6-test-script-output
+  - mkdir t \
+      && echo "use Test::Script::Output;for &lt;code> \
+      -> \$d { dir-ok( \$d.IO , 'Scripts in dir ' ~ \$d ~ ' are OK') }" \
+      > t/0.t
+script: docker run -t -v \
+      $TRAVIS_BUILD_DIR:/test jjmerelo/perl6-test-script-output</code></pre>
+            <aside class='notes'>Se trata de un módulo de Perl 6 que
+            se descarga del ecosistema y sirve para testear las
+            salidas de scripts. Lo escribí para el libro en el que
+            estoy trabajando. Pero muestra los PODs, o comentarios con
+            esteroides, y las posibilidades que ofrece Perl 6 para
+              introspección de código</aside>
+          </section>
         </section>
-        
+
 	<section><h1>Funciones de primera clase</h1></section>
 	<section><h1><em>Higher order functions</em></h1></section>
 	<section><h1><em>Currying</em></h1></section>
