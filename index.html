@@ -117,6 +117,19 @@ use v6;
 16
 25
 ....</code></pre>
+
+            <aside class='notes'>Siempre varias formas de hacerlo,
+          pero aquí muestro el script completo. Funciona como un
+          intérprete aunque internamente es un compilador JIT. Uso un
+          gestor de versiones, que me instala las versiones que van
+          apareciendo, periodicidad mensual. use v6 espanta a perl5 y
+          da un error. Usamos el hiper-operador, que aplica el
+          operador que tiene dentro, en este caso la exponenciación. Y
+          duckmap mola mucho: aplica la expresión, siempre que se
+          cumpla la signatura, en este caso de un pointy block. Otra
+          forma de filtrar... Aparte, el bloque =output es un bloque
+          de comentarios, pero tienen un nombre y podemos usarlo más
+              adelante para testear.</aside>
           </section>
 
           <section><h1>Sin test == Roto</h1>
