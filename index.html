@@ -140,6 +140,26 @@ script: docker run -t -v \
           </section>
         </section>
 
+        <section>
+          <section><h1>Tipos</h1>
+            <pre><code>sub quita-no-mayúsculas( Str $cadena &dash;&dash;> Seq ) {
+    return $cadena.comb.grep: * ∉ 'A'..'Z';
+}
+say quita-no-mayúsculas( "LaTeX" );
+say quita-no-mayúsculas( "Learn You a Haskell" );
+say &quita-no-mayúsculas.^name # Sub+{Callable[Seq]}
+            </code></pre>
+
+            <aside class='notes'>Aparte del formato del nombre y del
+          hecho de que podemos usar operadores Unicode, lo interesante
+          es una llamada a la meta-clase en forma de name, que nos
+              devuelve el tipo y el rol que implementa esa función. Es
+              un rol además parametrizado por el tipo que devuelve la función</aside>
+          </section>
+
+          <section><h1><em>Typeclasses</em></h1>
+          </section>
+          
 	<section><h1>Funciones de primera clase</h1></section>
 	<section><h1><em>Higher order functions</em></h1></section>
 	<section><h1><em>Currying</em></h1></section>
