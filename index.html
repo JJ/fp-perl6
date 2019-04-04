@@ -42,7 +42,19 @@
 	  <h1>Perl 6 empezó en Haskell</h1>
 	  <aside class='notes'>PUGS, el primer intérprete de Perl 6, lo escribió Audrey Tang en Haskell; ella escribió también uno de los primeros trabajos describiendo el diseño del lenguaje</aside>
 	</section>
-	<section data-background='https://live.staticflickr.com/16/22336624_ccf940d11a_o_d.jpg'><h1>Las mónadas me atrajeron a Perl 6</h1></section>
+
+	<section>
+	  <section data-background='https://live.staticflickr.com/16/22336624_ccf940d11a_o_d.jpg'><h1>Las mónadas me atrajeron a Perl 6</h1>
+	    <aside class='notes'>Las mónadas, según <a href='https://tanami.org/monads/'>esto</a>, hacen dos cosas: simulan estado y además permiten ordenar funciones (ya que en programación funcional las funciones son <em>puras</em>.
+	    </aside>
+	  </section>
+
+	  <section>
+	    <pre><code># return :: (Monad m) => a -&gt; m a
+sub mreturn($a --&gt; Code ) { return { $a } }
+	    </code></pre>
+	  </section>
+
 	<section><h1>Funciones de primera clase</h1></section>
 	<section><h1><em>Higher order functions</em></h1></section>
 	<section><h1><em>Currying</em></h1></section>

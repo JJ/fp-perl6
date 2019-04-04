@@ -5,7 +5,7 @@
  */
 
 
-@import url('https://fonts.googleapis.com/css?family=Lato|Lora|Major+Mono+Display');
+@import url('https://fonts.googleapis.com/css?family=Lato|Lora|Space+Mono');
 
 .reveal a {
   line-height: 1.3em; }
@@ -152,17 +152,17 @@ body {
 .reveal pre {
   display: block;
   position: relative;
-  width: 90%;
+  width: 95%;
   margin: 20px auto;
   text-align: left;
-  font-size: 0.55em;
+  font-size: 0.95em;
   font-family: monospace;
   line-height: 1.2em;
   word-wrap: break-word;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); }
 
 .reveal code {
-    font-family: 'Major Mono Display', monospace;
+    font-family: 'Space Mono', monospace;
     text-transform: none;
 }
 
@@ -170,7 +170,7 @@ body {
   display: block;
   padding: 5px;
   overflow: auto;
-  max-height: 400px;
+  max-height: 700px;
   word-wrap: normal; }
 
 .reveal table {
