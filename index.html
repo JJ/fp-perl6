@@ -88,7 +88,27 @@
 	  </section>
 
         </section>
-          
+
+        <section>
+          <section>
+            <h1>Procesando listas</h1>
+            <pre><code>(1..10).map( *²).say;</code></pre>
+            <pre class='fragment'><code>(1..10).map( *²).grep( * ≥ 12 ).say;</code></pre>
+            <pre class='fragment'><code>1..10 ==> map( *²) ==> grep( * ≥ 12 ) ==> my @output;
+@output.join( " ⬖ ").put;</code></pre>
+
+            <aside class='notes'>Tomado de <a
+        href='http://learnyouahaskell.com/starting-out#im-a-list-comprehension'>Learn
+            you a Haskell for Great Good</a>, la sintaxis es algo
+        diferente, pero casi igual de compacta y funcionalmente
+        similar. También se exhibe el "Whatever", que se usa para
+        crear código on the fly, el uso de Unicode como operadores, y
+              el operador "rocket" que mola mucho. 1..10 es un Range,
+        igual que en Haskell. Perl 6 usa duck typing. El operador
+        rocket hace lo que parece qu ehace, pero en realidad pasa su
+        lado derecho como segundo argumento a la función en su derecha.</aside>
+        </section>
+        
 	<section><h1>Funciones de primera clase</h1></section>
 	<section><h1><em>Higher order functions</em></h1></section>
 	<section><h1><em>Currying</em></h1></section>
