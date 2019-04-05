@@ -171,7 +171,11 @@ say &quita-no-mayúsculas.^name # Sub+{Callable[Seq]}
           </section>
 
           <section><h1><em>Typeclasses</em></h1>
-            <aside class='notes'><a
+	    <pre><code>sub þor( Int, Int &dash;&dash;&gt; Str ) {};
+say &þor.^name; # Sub+{Callable[Str]}
+say &þor.^mro;
+#((Sub+{Callable[Str]}) (Sub) (Routine) (Block) (Code) (Any) (Mu))
+	    </code></pre>         <aside class='notes'><a
             href='https://dev.to/jj/assuming-roles-2dog'>Aquí hablo
               sobre roles y mixins</a>. Aparentemente, las typeclasses
               son como roles abstractos.</aside>
