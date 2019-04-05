@@ -10,3 +10,7 @@ multi sub collatz( Int $a where not $a %% 2 ) { return collatz( ($a/3).Int + 1 )
 
 say collatz 10;
 say collatz 30;
+
+=output
+[10 5 2 1]
+[30 15 6 3 2 1]
