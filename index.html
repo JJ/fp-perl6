@@ -206,8 +206,25 @@ say "Casi " if $n1.casi-igual($n2);
 	  </section>
 	</section>
 	
-	    <section><h1>Funciones de primera clase</h1></section>
-	<section><h1><em>Higher order functions</em></h1></section>
+	<section> <!-- Funciones -->
+	  <section><h1>Emparejando patrones</h1>
+<pre><code>proto sub lucky (Int \a &dash;&dash;&gt; Str ) { *}
+multi sub lucky ( 7 ) {  "LUCKY NUMBER SEVEN!" }
+multi sub lucky ( $x where * ≠ 7 ) { "Sorry, you're out of luck, pal!" };
+				     
+say lucky 7 ;
+say lucky 33;</code></pre>
+<aside class='notes'>Prácticamente igual que http://learnyouahaskell.com/syntax-in-functions</aside>
+	  </section>
+	  <section><h1><em>Higher order functions</em></h1>
+	    <pre><code>sub mult-three( \a, \b, \c ) {
+    return a * b * c;
+}
+my &mult-two-with-nine = &mult-three.assuming( *, *, 9);
+say mult-two-with-nine 2, 3;</code></pre>
+
+	    <aside class='notes'>Whatever y assumming permiten currificar todo lo que haga falta.</aside>
+	  </section>
 	<section><h1><em>Currying</em></h1></section>
         <section><h1>Mónadas</h1>
 	    <pre><code># return :: (Monad m) => a -&gt; m a
