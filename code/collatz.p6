@@ -2,6 +2,8 @@
 
 use v6;
 
+# Conjetura de Collatz: https://es.wikipedia.org/wiki/Conjetura_de_Collatz
+
 proto collatz( Int $a --> List ) {*};
 
 multi sub collatz( 1 ) { return [1] }
@@ -16,6 +18,6 @@ say collatz 30;
 say @long-chains.elems;
 
 =output
-[10 5 2 1]
+[10 5 16 8 4 2 1]
 [30 15 46 23 70 35 106 53 160 80 40 20 10 5 16 8 4 2 1]
 66
