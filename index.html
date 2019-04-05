@@ -282,8 +282,16 @@ say maybe &abs, Nil;
 say (maybe &abs,  $treinta-y-tres )();
           </code></pre>
         </section>
+
+        <section><h1>Functoreando</h1>
+          <pre><code># fmap (++ " HEY GUYS IM INSIDE THE JUST") (Just "Something serious.")
+multi sub fmap( &f, Nil ) { return Nil };
+multi sub fmap( &f, Just $x ) { return Just.new( f( $x() ) ) ;}
+say fmap * ~ " HEY GUYS IM INSIDE THE JUST", Just.new: "Something serious.";
+          </code></pre>
         </section>
-        
+
+        </section>
         <section><h1>Mónadas</h1>
 	    <pre><code># return :: (Monad m) => a -&gt; m a
 sub mreturn($a --&gt; Code ) { return { $a } }
