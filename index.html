@@ -180,8 +180,26 @@ say &þor.^mro;
               sobre roles y mixins</a>. Aparentemente, las typeclasses
               son como roles abstractos.</aside>
           </section>
-          
-	<section><h1>Funciones de primera clase</h1></section>
+
+	  <section><pre><code>role CasiEq {
+    method  casi-igual( \rhs &dash;&dash;&gt; Bool) {...}
+    method  casi-diferente( \rhs &dash;&dash;&gt; Bool) {...}
+}
+class CasiEqInt does CasiEq {
+    has Int $.n;
+    method casi-igual ( \rhs &dash;&dash;&gt; Bool) { return True if abs($!n - rhs) ≤ 1 }
+    method casi-diferente ( \rhs &dash;&dash;&gt; Bool) { True unless abs($!n - rhs) ≤ 1}
+    method Numeric( &dash;&dash;&gt; Numeric:D ) { return $!n }
+}
+my $n1 := CasiEqInt.new( n => 1 );
+my $n2 := CasiEqInt.new( n => 2 );
+say "Casi " if $n1.casi-igual($n2);
+</pre></code>
+	  </section>
+
+
+	</section>
+	    <section><h1>Funciones de primera clase</h1></section>
 	<section><h1><em>Higher order functions</em></h1></section>
 	<section><h1><em>Currying</em></h1></section>
         <section><h1>Mónadas</h1>
