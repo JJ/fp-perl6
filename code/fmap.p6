@@ -24,4 +24,4 @@ say fmap * ~ " HEY GUYS IM INSIDE THE JUST", Nil;
 
 =output
 Just Something serious. HEY GUYS IM INSIDE THE JUST
-33
+Nil
