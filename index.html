@@ -253,8 +253,37 @@ say map( { ( { - $_ } ∘ &abs)($_) },  [5,-3,-6,7,-3,2,-19,24])
               lambda definida sobre la marcha. </aside>
           </section>
 	</section>
-	
-	  <section><h1><em>Currying</em></h1></section>
+
+        <section>
+          <section><h1>Un functor empieza así</h1>
+          <pre><code>class Just {
+    has &.a;
+    method new( $a ) {
+        return self.bless( a => {$a} );
+    }
+
+    method CALL-ME( |c ) {
+        return &!a();
+    }
+}</code></pre>
+          <aside class='notes'>La mejor forma que he encontrado es
+        definir una clase, así se pueden usar comprobación de tipos y
+        demás. Tiene "azúcar sintáctico" para poder llamarla
+            directamente sin necesidad de acceder al nombre del atributo</aside>
+        </section>
+
+        <section><h1>Y continúa</h1>
+          <pre><code>multi sub maybe( &f, Nil ) { return Nil };
+multi sub maybe( &f, Just $x ) { return Just.new( f( $x() ) ) };
+
+my $treinta-y-tres = Just.new( -33 );
+
+say maybe &abs, Nil;
+say (maybe &abs,  $treinta-y-tres )();
+          </code></pre>
+        </section>
+        </section>
+        
         <section><h1>Mónadas</h1>
 	    <pre><code># return :: (Monad m) => a -&gt; m a
 sub mreturn($a --&gt; Code ) { return { $a } }
@@ -289,7 +318,7 @@ sub mreturn($a --&gt; Code ) { return { $a } }
       </div>
     </div>
 
-		<script src="js/reveal.js"></script>
+    <script src="js/reveal.js"></script>
 
 		<script>
 			// More info about config & dependencies:
