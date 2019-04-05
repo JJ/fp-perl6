@@ -235,7 +235,9 @@ say apply-twice( * ~ " HAHA" , "HEY" );
 say apply-twice( "HAHA " ~ *, "HEY" );</code></pre>
 
 <aside class='notes'>Una vez más, *, que crea código sobre la marcha, nos salva el trasero y permite acercarnos a la sintaxis de Haskell.</aside></section>
-<section><h1><em>Currying</em></h1></section>
+	</section>
+	
+	  <section><h1><em>Currying</em></h1></section>
         <section><h1>Mónadas</h1>
 	    <pre><code># return :: (Monad m) => a -&gt; m a
 sub mreturn($a --&gt; Code ) { return { $a } }
