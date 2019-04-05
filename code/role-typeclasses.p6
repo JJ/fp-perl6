@@ -12,7 +12,7 @@ class CasiEqInt does CasiEq {
 }
 my $n1 := CasiEqInt.new( n => 1 );
 my $n2 := CasiEqInt.new( n => 2 );
-say "Casi " if $n1.casi-igual($n2);
+say "Casi" if $n1.casi-igual($n2);
 
 
 =output
