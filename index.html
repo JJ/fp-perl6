@@ -292,12 +292,24 @@ say fmap * ~ " HEY GUYS IM INSIDE THE JUST", Just.new: "Something serious.";
         </section>
 
         </section>
+
+        <section><!-- Mónadas -->
         <section><h1>Mónadas</h1>
-	    <pre><code># return :: (Monad m) => a -&gt; m a
-sub mreturn($a --&gt; Code ) { return { $a } }
-	    </code></pre>
+	  <pre><code>{
+  say "Write a couple of lines here ->";
+  my $line_from_user = getLine();
+  my $echo = mbind($line_from_user, -> $x { putStrLn($x) });
+  my @actions = (getLine(), $echo);
+  my $both = sequence_(@actions);
+  $both();
+}</code></pre>
 	  </section>
 
+          <section data-background='img/lwall-monads.png'>
+            <h1 class='fragment'>Círculo completo</h1>
+            <aside class='notes'>Nótese no sólo la presencia de Larry
+              Wall, sino la senilidad del código...</aside>
+          </section>
 
           <section>
             <section><img src='img/meme-iñigo.jpg' alt='me quedo con
