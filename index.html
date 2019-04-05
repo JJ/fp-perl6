@@ -234,7 +234,16 @@ say apply-twice( * + 3, 10 );
 say apply-twice( * ~ " HAHA" , "HEY" );
 say apply-twice( "HAHA " ~ *, "HEY" );</code></pre>
 
-<aside class='notes'>Una vez más, *, que crea código sobre la marcha, nos salva el trasero y permite acercarnos a la sintaxis de Haskell.</aside></section>
+<aside class='notes'>Una vez más, *, que crea código sobre la marcha,
+  nos salva el trasero y permite acercarnos a la sintaxis de
+  Haskell.</aside></section>
+
+          <section><h1>Lambda (in the Alhambra)</h1>
+            <pre><code># zipWith (\a b -> (a * 30 + 3) / b) [5,4,3,2,1] [1,2,3,4,5]  
+say ((1..5) Z (5...1)).map( -> (\a, \b) { (a*30+3)/b });</code></pre>
+            <aside class='notes'>En realidad hemos visto ya un montón
+              de lambdas, pero estas son más explícitas.</aside>
+          </section>
 	</section>
 	
 	  <section><h1><em>Currying</em></h1></section>
@@ -246,7 +255,8 @@ sub mreturn($a --&gt; Code ) { return { $a } }
 
 
 	
-	<section>
+	  <section>
+            <h1>Créditos</h1>
 	  <ul class='credits'>
 	    <li>Foto de Audrey Tang de <a href='https://flic.kr/p/2x7GEC'>Yoshinori Takesako</a></li>
 	  </ul>
