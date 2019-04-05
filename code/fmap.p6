@@ -23,5 +23,5 @@ say fmap * ~ " HEY GUYS IM INSIDE THE JUST", Just.new: "Something serious.";
 say fmap * ~ " HEY GUYS IM INSIDE THE JUST", Nil;
 
 =output
-Nil
+Just Something serious. HEY GUYS IM INSIDE THE JUST
 33
