@@ -200,7 +200,9 @@ say "Casi " if $n1.casi-igual($n2);
 	  <section><h1>O con protos/multi</h1>
 	    <pre><code>proto sub infix:&lt;≈&gt; ( | &dash;&dash;&gt; Bool) {*} </code></pre>
 
-	    <pre class='fragment'><code>multi sub infix:&lt;≈&gt; ( Int $lhs, Int $rhs &dash;&dash;&gt; Bool) { return True if abs( $lhs - $rhs) ≤ 1 }</code></pre>
+	    <pre class='fragment'><code>multi sub infix:&lt;≈&gt; ( Int $lhs, Int $rhs &dash;&dash;&gt; Bool) {
+	return True if abs( $lhs - $rhs) ≤ 1
+}</code></pre>
 
 	    <pre class='fragment'><code>say "Casi " if 3 ≈ 2 ;</code></pre>
 	  </section>
@@ -216,7 +218,7 @@ say lucky 7 ;
 say lucky 33;</code></pre>
 <aside class='notes'>Prácticamente igual que http://learnyouahaskell.com/syntax-in-functions</aside>
 	  </section>
-	  <section><h1><em>Higher order functions</em></h1>
+	  <section><h1><em>Funciones curry-adas</em></h1>
 	    <pre><code>sub mult-three( \a, \b, \c ) {
     return a * b * c;
 }
@@ -225,7 +227,15 @@ say mult-two-with-nine 2, 3;</code></pre>
 
 	    <aside class='notes'>Whatever y assumming permiten currificar todo lo que haga falta.</aside>
 	  </section>
-	<section><h1><em>Currying</em></h1></section>
+
+	  <section><h1>Funciones que devuelven funciones</h1>
+<pre><code>sub apply-twice( &f, \a ) { f( f ( a ) ) }
+say apply-twice( * + 3, 10 );
+say apply-twice( * ~ " HAHA" , "HEY" );
+say apply-twice( "HAHA " ~ *, "HEY" );</code></pre>
+
+<aside class='notes'>Una vez más, *, que crea código sobre la marcha, nos salva el trasero y permite acercarnos a la sintaxis de Haskell.</aside></section>
+<section><h1><em>Currying</em></h1></section>
         <section><h1>Mónadas</h1>
 	    <pre><code># return :: (Monad m) => a -&gt; m a
 sub mreturn($a --&gt; Code ) { return { $a } }
@@ -233,6 +243,7 @@ sub mreturn($a --&gt; Code ) { return { $a } }
 	  </section>
 
 
+	
 	<section>
 	  <ul class='credits'>
 	    <li>Foto de Audrey Tang de <a href='https://flic.kr/p/2x7GEC'>Yoshinori Takesako</a></li>
