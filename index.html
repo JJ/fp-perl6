@@ -197,8 +197,15 @@ say "Casi " if $n1.casi-igual($n2);
 </pre></code>
 	  </section>
 
+	  <section><h1>O con protos/multi</h1>
+	    <pre><code>proto sub infix:&lt;≈&gt; ( | &dash;&dash;&gt; Bool) {*} </code></pre>
 
+	    <pre class='fragment'><code>multi sub infix:&lt;≈&gt; ( Int $lhs, Int $rhs &dash;&dash;&gt; Bool) { return True if abs( $lhs - $rhs) ≤ 1 }</code></pre>
+
+	    <pre class='fragment'><code>say "Casi " if 3 ≈ 2 ;</code></pre>
+	  </section>
 	</section>
+	
 	    <section><h1>Funciones de primera clase</h1></section>
 	<section><h1><em>Higher order functions</em></h1></section>
 	<section><h1><em>Currying</em></h1></section>
