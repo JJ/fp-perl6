@@ -5,6 +5,6 @@ services:
 
 install:
   - docker pull jjmerelo/perl6-test-script-output
-  - mkdir t && echo "use Test::Script::Output;for <code> -> \$d { dir-ok( \$d.IO , 'Scripts in dir ' ~ \$d ~ ' are OK') }" > t/0.t
+  - mkdir t && echo "use Test; use Test::Script::Output; plan *; for <code> -> \$d { dir-ok( \$d.IO , 'Scripts in dir ' ~ \$d ~ ' are OK') }; done-testing" > t/0.t
 
 script: docker run -t -v  $TRAVIS_BUILD_DIR:/test jjmerelo/perl6-test-script-output
