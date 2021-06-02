@@ -1,0 +1,349 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>Programación funcional en Raku</title>
+    
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/extra.css">
+    <link rel="stylesheet" href="css/theme/sky.css">
+    
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/monokai.css">
+    
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+	<section data-background='https://live.staticflickr.com/7887/33670933138_da8a24fd47_o_d.jpg'><h1>Raku y la programación funcional</h1></section>
+	<section> <img
+    src='https://farm8.staticflickr.com/7914/46806908884_b4df834428_k_d.jpg'
+    alt='selfie'>
+          <aside
+            class='notes'>¿Quién soy yo?. Programador en Perl desde
+    1993, en Raku desde 2016. Documentador-en-jefe de Raku, aunque
+    no existe esa posición y en realidad no soy jefe de nadie, sólo el
+    que se encarga de la documentación; también fui becario de la Perl
+    Foundation para encargarme de ella.</aside></section>
+
+
+	<section data-background='https://live.staticflickr.com/1057/1008475616_cad7d6a780_b_d.jpg'>
+	  <h1>Raku empezó en Haskell</h1>
+	  <aside class='notes'>PUGS, el primer intérprete de Raku,
+	  lo escribió Audrey Tang en Haskell; ella escribió también
+	  uno de los primeros trabajos describiendo el diseño del
+	  lenguaje</aside> 
+	</section>
+
+	<section>
+	  <section data-background='https://live.staticflickr.com/7921/46812657474_b8d0df40aa_o_d.jpg'><h1>Las mónadas me atrajeron a Raku</h1>
+	    <aside class='notes'>Las mónadas, según <a
+	  href='https://tanami.org/monads/'>esto</a>, hacen dos cosas:
+	  simulan estado y además permiten ordenar funciones (ya que
+	  en programación funcional las funciones son
+	  <em>puras</em>. Pero el tema es que un día, después de algún
+	  tutorial de Haskell donde me enteré de un épsilon más que en
+	  el anterior, me dije
+	  "Hum. ¿Podrán implementarse mónadas en Raku?". Encontré un
+	  fichero creado por esta persona, Larry Wall. Era muy
+	  antiguo, para versiones iniciales de Raku, en concreto,
+	  las escritas para Pugs, y no funcionaba. Lo arreglé, hice
+	  pull request, y de repente me dieron el commit bit. Y es que
+	  Raku se estuvo desarrollando durante 15 años hasta que se
+	  produjo la primera versión estable. Durante 15 años iba a
+	  estar listo para navidad, pero no se dijo de qué año. Larry
+	  Wall creó Perl en los 80 y fue evolucionando hasta Perl 5,
+	  que se sigue usando ahora. Raku va mucho más allá. Larry
+	  Wall dice que existe la misma relación entre ambos que entre
+	  el Hobbit y el Señor de los Anillos. Están en el mismo
+	  mundo, son lenguajes hermanos, están en la misma
+	  comunidad. Pero como Charmander y Charmeleon, es una
+	  evolución uno de otro. Pero vamos a ver efectivamente qué tiene Raku de funcional, mirando a los ejemplos que aparecen en "Learn you a Haskell for great good"
+	    </aside>
+	  </section>
+
+        </section>
+
+        <section>
+          <section>
+            <h1>Procesando listas</h1>
+            <pre><code>(1..10).map( *²).say;</code></pre>
+            <pre class='fragment'><code>(1..10).map( *²).grep( * ≥ 12 ).say;</code></pre>
+            <pre class='fragment'><code>1..10 ==> map( *²) ==> grep( * ≥ 12 ) ==> my @output;
+@output.join( " ⬖ ").put;</code></pre>
+
+            <aside class='notes'>Tomado de <a
+        href='http://learnyouahaskell.com/starting-out#im-a-list-comprehension'>Learn
+            you a Haskell for Great Good</a>, la sintaxis es algo
+        diferente, pero casi igual de compacta y funcionalmente
+        similar. También se exhibe el "Whatever", que se usa para
+        crear código on the fly y es equivalente al _ de Scala, como un placeholder, el uso de Unicode como operadores, y
+              el operador "rocket" que mola mucho (aunque en realidad se llama "feed"). 1..10 es un Range,
+        igual que en Haskell. Raku usa duck typing. El operador
+        rocket hace lo que parece que hace ("alimentar" la salida de una función en la entrada de otra), pero en realidad pasa su
+        lado derecho como segundo argumento a la función en su derecha. grep es un poco como filter, y map es map.</aside>
+          </section>
+
+          <section><h1>TIMTOWTDI</h1>
+            <pre><code>#!/usr/bin/env perl6
+use v6;
+((1..10) »**» 2 ).duckmap: -> $x where * ≥ 12 { $x.say };
+=output
+16
+25
+....</code></pre>
+
+            <aside class='notes'>Siempre varias formas de hacerlo,
+          pero aquí muestro el script completo. Funciona como un
+          intérprete aunque internamente es un compilador JIT. Uso un
+          gestor de versiones, que me instala las versiones que van
+          apareciendo, periodicidad mensual (más o menos). use v6 espanta a perl5 y
+          da un error en caso de que se use. Usamos el hiper-operador, que aplica el
+          operador que tiene dentro, en este caso la exponenciación. Y
+          duckmap mola mucho: aplica la expresión, siempre que se
+          cumpla la signatura, en este caso de un pointy block. Otra
+              forma de filtrar... También Raku es orientado a objeto, así que se pueden usar muchas funciones (como say) como método.
+	      Aparte, el bloque =output es un bloque
+          de comentarios, pero tienen un nombre y podemos usarlo más
+              adelante para testear.</aside>
+          </section>
+
+        </section>
+
+        <section>
+          <section><h1>Tipos</h1>
+            <pre><code>sub quita-no-mayúsculas( Str $cadena &dash;&dash;> Seq ) {
+    return $cadena.comb.grep: * ∉ 'A'..'Z';
+}
+say quita-no-mayúsculas( "LaTeX" );
+say quita-no-mayúsculas( "Learn You a Raku" );
+say &quita-no-mayúsculas.^name # Sub+{Callable[Seq]}
+            </code></pre>
+
+            <aside class='notes'>¿Sabéis como se llama este formato de identificadores? Aparte del formato del nombre (incluyendo los guiones, <a href='https://en.wikipedia.org/wiki/Naming_convention_(programming)#Multiple-word_identifiers'>kebab-case</a>) y del
+          hecho de que podemos usar operadores Unicode, lo interesante
+          es una llamada a la meta-clase en forma de name, que nos
+              devuelve el tipo y el rol que implementa esa función. Es
+              un rol además parametrizado por el tipo que devuelve la función</aside>
+          </section>
+
+          <section><h1><em>Typeclasses</em></h1>
+	    <pre><code>sub þor( Int, Int &dash;&dash;&gt; Str ) {};
+say &þor.^name; # Sub+{Callable[Str]}
+say &þor.^mro;
+#((Sub+{Callable[Str]}) (Sub) (Routine) (Block) (Code) (Any) (Mu))
+	    </code></pre>         <aside class='notes'>Y lo que más mola, el uso de la letra þ (þorn) como parte de un identificador. Es mi letra favorita. <a
+            href='https://dev.to/jj/assuming-roles-2dog'>Aquí hablo
+              sobre roles y mixins</a>. Aparentemente, las typeclasses
+              son como roles abstractos.</aside>
+          </section>
+
+	  <section><pre><code>role CasiEq {
+    method  casi-igual( \rhs &dash;&dash;&gt; Bool) {...}
+    method  casi-diferente( \rhs &dash;&dash;&gt; Bool) {...}
+}
+class CasiEqInt does CasiEq {
+    has Int $.n;
+    method casi-igual ( \rhs &dash;&dash;&gt; Bool) { return True if abs($!n - rhs) ≤ 1 }
+    method casi-diferente ( \rhs &dash;&dash;&gt; Bool) { True unless abs($!n - rhs) ≤ 1}
+    method Numeric( &dash;&dash;&gt; Numeric:D ) { return $!n }
+}
+my $n1 := CasiEqInt.new( n => 1 );
+my $n2 := CasiEqInt.new( n => 2 );
+say "Casi " if $n1.casi-igual($n2);
+	    </pre></code>
+
+	    <aside class='notes'>Return es optativo, como se puede ver en la segunda función</aside>
+	  </section>
+	  
+
+	  <section><h1>O con protos/multi</h1>
+	    <pre><code>proto sub infix:&lt;≈&gt; ( | &dash;&dash;&gt; Bool) {*} </code></pre>
+
+	    <pre class='fragment'><code>multi sub infix:&lt;≈&gt; ( Int $lhs, Int $rhs &dash;&dash;&gt; Bool) {
+	return True if abs( $lhs - $rhs) ≤ 1
+}</code></pre>
+
+	    <pre class='fragment'><code>say "Casi " if 3 ≈ 2 ;</code></pre>
+	  </section>
+	</section>
+	
+	<section> <!-- Funciones -->
+	  <section><h1>Emparejando patrones</h1>
+<pre><code>proto sub lucky (Int \a &dash;&dash;&gt; Str ) { *}
+multi sub lucky ( 7 ) {  "LUCKY NUMBER SEVEN!" }
+multi sub lucky ( $x where * ≠ 7 ) { "Sorry, you're out of luck, pal!" };
+				     
+say lucky 7 ;
+say lucky 33;</code></pre>
+<aside class='notes'>Prácticamente igual que http://learnyouahaskell.com/syntax-in-functions</aside>
+	  </section>
+	  
+	  <section data-background='https://live.staticflickr.com/5188/5663370160_fc7840c00a_b_d.jpg'>
+	    <h1><em>Funciones curry-adas</em></h1>
+	    <pre><code>sub mult-three( \a, \b, \c ) {
+    return a * b * c;
+}
+my &mult-two-with-nine = &mult-three.assuming( *, *, 9);
+say mult-two-with-nine 2, 3;</code></pre>
+
+	    <aside class='notes'>Whatever y assumming permiten currificar todo lo que haga falta.</aside>
+	  </section>
+
+	  <section><h1>Funciones que devuelven funciones</h1>
+<pre><code>sub apply-twice( &f, \a ) { f( f ( a ) ) }
+say apply-twice( * + 3, 10 );
+say apply-twice( * ~ " HAHA" , "HEY" );
+say apply-twice( "HAHA " ~ *, "HEY" );</code></pre>
+
+<aside class='notes'>Una vez más, *, que crea código sobre la marcha,
+  nos salva el trasero y permite acercarnos a la sintaxis de
+  Haskell. También se usa un sigilless variable, que tiene la ventaja de no tener ningún tipo asumido. </aside></section>
+
+          <section><h1>Lambda</h1>
+            <pre><code>say ((1..5) Z (5...1)).map( -> (\a, \b) { (a*30+3)/b });</code></pre>
+            <aside class='notes'>En realidad hemos visto ya un montón
+              de lambdas, pero estas son más explícitas.</aside>
+          </section>
+
+          <section><h1>Composición de funciones</h1>
+            <pre><code>say map( { ( { - $_ } ∘ &abs)($_) },  [5,-3,-6,7,-3,2,-19,24]) 
+            </code></pre>
+            <aside class='notes'>como no existe negate, usamos una
+              lambda definida sobre la marcha. </aside>
+          </section>
+	</section>
+
+        <section>
+          <section><h1>Un functor empieza así</h1>
+          <pre><code>class Just {
+    has &.a;
+    method new( $a ) {
+        return self.bless( a => {$a} );
+    }
+
+    method CALL-ME( |c ) {
+        return &!a();
+    }
+}</code></pre>
+          <aside class='notes'>La mejor forma que he encontrado es
+        definir una clase, así se pueden usar comprobación de tipos y
+        demás. Tiene "azúcar sintáctico" para poder llamarla
+            directamente sin necesidad de acceder al nombre del atributo</aside>
+        </section>
+
+        <section><h1>Y continúa</h1>
+          <pre><code>multi sub maybe( &f, Nil ) { return Nil };
+multi sub maybe( &f, Just $x ) { return Just.new( f( $x() ) ) };
+
+my $treinta-y-tres = Just.new( -33 );
+
+say maybe &abs, Nil;
+say (maybe &abs,  $treinta-y-tres )();
+          </code></pre>
+        </section>
+
+        <section><h1>Functoreando</h1>
+          <pre><code># fmap (++ " HEY GUYS IM INSIDE THE JUST") (Just "Something serious.")
+multi sub fmap( &f, Nil ) { return Nil };
+multi sub fmap( &f, Just $x ) { return Just.new( f( $x() ) ) ;}
+say fmap * ~ " HEY GUYS IM INSIDE THE JUST", Just.new: "Something serious.";
+          </code></pre>
+        </section>
+
+        </section>
+
+        <section><!-- Mónadas -->
+        <section><h1>Mónadas</h1>
+	  <pre><code>{
+  say "Write a couple of lines here ->";
+  my $line_from_user = getLine();
+  my $echo = mbind($line_from_user, -> $x { putStrLn($x) });
+  my @actions = (getLine(), $echo);
+  my $both = sequence_(@actions);
+  $both();
+}</code></pre>
+	  </section>
+
+          <section data-background='img/lwall-monads.png'>
+            <h1 class='fragment'>Círculo completo</h1>
+            <aside class='notes'>Nótese no sólo la presencia de Larry
+              Wall, sino la senilidad del código...</aside>
+          </section>
+        </section>
+        
+          <section>
+            <section><img src='img/meme-iñigo.jpg' alt='me quedo con Haskell'>
+            </section>
+
+            <section data-background='https://live.staticflickr.com/1864/43650521494_79b2f89d74_k_d.jpg'>
+              <h2>No tendrás concurrencia basada en canales</h2>
+              <h1 class='fragment'>... ni gramáticas </h1>
+              <aside class='notes'>Ni roles, ni un sistema de
+              documentación súper chulo, ni expresiones regulares
+                súper-potentes, ni autothreading...
+                En este <a
+              href='https://www.reddit.com/r/haskell/comments/3yl7ep/what_are_haskellers_opinioncritiques_of_perl6/'>reddit</a>
+              mencionan unas cuantas más cosas: pereza, funciones
+              puras, sub-tipos... Salvo en algún detalle (pocos) es un
+              lenguaje funcional impuro completo.
+              </aside>
+            </section>
+            
+            <section data-background='https://live.staticflickr.com/7829/47543131791_89dab636e1_k_d.jpg'><h1>Y Camelia llorará</h1>
+              <aside class='notes'>Cada lenguaje es diferente, y cada
+                uno tiene sus características
+                específicas. Haskell es funcional puro, Raku
+                es multiparadigma</aside></section>
+
+          </section>
+
+	  <section
+	    data-background='https://live.staticflickr.com/7857/47543675121_45f0acf978_k_d.jpg'>
+            <h1>Muchas gracias</h1>
+            <h2><a
+	      href='https://jj.github.io/fp-perl6/eslibre.html'><code>jj.github.io/fp-perl6/eslibre.html</code></a></h2>
+            <h2>Código en <a
+	      href='https://git.io/p6lambda'><code>git.io/p6lambda</code></a></h2>
+
+          </section>
+          
+	  <section>
+            <h1>Créditos</h1>
+	  <ul class='credits'>
+	    <li>Foto de Audrey Tang de <a href='https://flic.kr/p/2x7GEC'>Yoshinori Takesako</a></li>
+	    <li>Curris de <a href='https://www.flickr.com/photos/jeffchristiansen/5663370160/in/photolist-9CsfD7-9Cpo7a-9CshDW-9CpnVZ-9Gk7LK'>Jeff Christiansen</a></li>
+	  </ul>
+      </div>
+    </div>
+
+    <script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+			width: '95%',
+			controls: true,
+			progress: true,
+			history: true,
+				dependencies: [
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
