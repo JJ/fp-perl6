@@ -3,17 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <title>Does it come in functional? Yes it does! functional programming in Raku</title>
-    
+
+    <title>Yes, we have that too:  Functional programming in Raku</title>
+
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/extra.css">
     <link rel="stylesheet" href="css/theme/sky.css">
-    
+
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="lib/css/monokai.css">
-    
+
     <!-- Printing and PDF exports -->
     <script>
       var link = document.createElement( 'link' );
@@ -44,7 +44,7 @@
 
 
 	<section data-background='https://live.staticflickr.com/1057/1008475616_cad7d6a780_b_d.jpg'>
-	  <h1>Raku's inception: with Haskell</h1>
+	  <h1>Haskell in the inception of Raku</h1>
 	  <aside class='notes'>PUGS, el primer intérprete de Raku,
 	  lo escribió Audrey Tang en Haskell; ella escribió también
 	  uno de los primeros trabajos describiendo el diseño del
@@ -59,22 +59,14 @@
 	  href='https://tanami.org/monads/'>esto</a>, hacen dos cosas:
 	  simulan estado y además permiten ordenar funciones (ya que
 	  en programación funcional las funciones son
-	  <em>puras</em>. Pero el tema es que un día, después de algún
+	  <em>puras</em>). Pero el tema es que un día, después de algún
 	  tutorial de Haskell donde me enteré de un épsilon más que en
 	  el anterior, me dije
 	  "Hum. ¿Podrán implementarse mónadas en Raku?". Encontré un
 	  fichero creado por esta persona, Larry Wall. Era muy
 	  antiguo, para versiones iniciales de Raku, en concreto,
 	  las escritas para Pugs, y no funcionaba. Lo arreglé, hice
-	  pull request, y de repente me dieron el commit bit. Y es que
-	  Raku se estuvo desarrollando durante 15 años hasta que se
-	  produjo la primera versión estable. Durante 15 años iba a
-	  estar listo para Navidad, pero no se dijo de qué año. Raku va mucho más allá. Larry
-	  Wall dice que existe la misma relación entre ambos que entre
-	  el Hobbit y el Señor de los Anillos. Están en el mismo
-	  mundo, son lenguajes hermanos, están en la misma
-	  comunidad. Pero como Charmander y Charmeleon, es una
-	  evolución uno de otro. Pero vamos a ver efectivamente qué
+	  pull request, y de repente me dieron el commit bit. Pero vamos a ver efectivamente qué
 	  tiene Raku de funcional, mirando a los ejemplos que aparecen
 	  en "Learn you a Haskell for great good".
 	    </aside>
@@ -83,12 +75,15 @@
         </section>
 
         <section>
-            <section><h1>Learn you a Raku for great good</h1>
+          <section>
+	    <h1>Learn you a Raku for great good</h1>
             </section>
-            
+
           <section>
             <h1>List processing</h1>
+	    <pre><code>[x*2 | x &lt;- [1..10]]</code></pre>
             <pre><code>(1..10).map( *²).say;</code></pre>
+	    <pre class='fragment'><code> [x*2 | x &lt;- [1..10], x*2 >= 12]  </code>
             <pre class='fragment'><code>(1..10).map( *²).grep( * ≥ 12 ).say;</code></pre>
             <pre class='fragment'><code>1..10 ==> map( *²) ==> grep( * ≥ 12 ) ==> my @output;
 @output.join( " ⬖ ").put;</code></pre>
@@ -106,25 +101,19 @@
           </section>
 
           <section><h1>TIMTOWTDI</h1>
-            <pre><code>#!/usr/bin/env perl6
-use v6;
+            <pre><code>#!/usr/bin/env raku
 ((1..10) »**» 2 ).duckmap: -> $x where * ≥ 12 { $x.say };
 =output
 16
 25
 ....</code></pre>
 
-            <aside class='notes'>Siempre varias formas de hacerlo,
-          pero aquí muestro el script completo. Funciona como un
-          intérprete aunque internamente es un compilador JIT. Uso un
-          gestor de versiones, que me instala las versiones que van
-          apareciendo, periodicidad mensual (más o menos). use v6 espanta a perl5 y
-          da un error en caso de que se use. Usamos el hiper-operador, que aplica el
+            <aside class='notes'>Usamos el hiper-operador, que aplica el
           operador que tiene dentro, en este caso la exponenciación. Y
           duckmap mola mucho: aplica la expresión, siempre que se
           cumpla la signatura, en este caso de un pointy block. Otra
               forma de filtrar... También Raku es orientado a objeto, así que se pueden usar muchas funciones (como say) como método.
-	      Aparte, el bloque =output es un bloque
+	      Aparte, el bloque <code>=output</code> es un bloque
           de comentarios, pero tienen un nombre y podemos usarlo más
               adelante para testear.</aside>
           </section>
@@ -133,12 +122,12 @@ use v6;
 
         <section>
           <section><h1>Tipos</h1>
-            <pre><code>sub quita-no-mayúsculas( Str $cadena &dash;&dash;> Seq ) {
-    return $cadena.comb.grep: * ∉ 'A'..'Z';
+            <pre><code>sub want-no-caps( Str $string &dash;&dash;> Seq ) {
+    return $string.comb.grep: * ∉ 'A'..'Z';
 }
-say quita-no-mayúsculas( "LaTeX" );
-say quita-no-mayúsculas( "Learn You a Raku" );
-say &quita-no-mayúsculas.^name # Sub+{Callable[Seq]}
+say want-no-caps( "LaTeX" );
+say want-no-caps( "Learn You a Raku" );
+say &want-no-caps.^name # Sub+{Callable[Seq]}
             </code></pre>
 
             <aside class='notes'>¿Sabéis como se llama este formato de identificadores? Aparte del formato del nombre (incluyendo los guiones, <a href='https://en.wikipedia.org/wiki/Naming_convention_(programming)#Multiple-word_identifiers'>kebab-case</a>) y del
@@ -159,42 +148,45 @@ say &þor.^mro;
               son como roles abstractos.</aside>
           </section>
 
-	  <section><pre><code>role CasiEq {
-    method  casi-igual( \rhs &dash;&dash;&gt; Bool) {...}
-    method  casi-diferente( \rhs &dash;&dash;&gt; Bool) {...}
+	  <section><pre><code>role AlmostEq {
+    method  almost-equal( \rhs &dash;&dash;&gt; Bool) {...}
+    method  almost-different( \rhs &dash;&dash;&gt; Bool) {...}
 }
-class CasiEqInt does CasiEq {
+class AlmostEqInt does AlmostEq {
     has Int $.n;
-    method casi-igual ( \rhs &dash;&dash;&gt; Bool) { return True if abs($!n - rhs) ≤ 1 }
-    method casi-diferente ( \rhs &dash;&dash;&gt; Bool) { True unless abs($!n - rhs) ≤ 1}
+    method almost-equal ( \rhs &dash;&dash;&gt; Bool) { return True if abs($!n - rhs) ≤ 1 }
+    method almost-different ( \rhs &dash;&dash;&gt; Bool) { True unless abs($!n - rhs) ≤ 1}
     method Numeric( &dash;&dash;&gt; Numeric:D ) { return $!n }
 }
-my $n1 := CasiEqInt.new( n => 1 );
-my $n2 := CasiEqInt.new( n => 2 );
-say "Casi " if $n1.casi-igual($n2);
+my $n1 := AlmostEqInt.new( n => 1 );
+my $n2 := AlmostEqInt.new( n => 2 );
+say "Almost " if $n1.almost-equal($n2);
 	    </pre></code>
 
 	    <aside class='notes'>Return es optativo, como se puede ver en la segunda función</aside>
 	  </section>
-	  
 
-	  <section><h1>O con protos/multi</h1>
+	  <section><h1>Or using protos/multi</h1>
 	    <pre><code>proto sub infix:&lt;≈&gt; ( | &dash;&dash;&gt; Bool) {*} </code></pre>
 
 	    <pre class='fragment'><code>multi sub infix:&lt;≈&gt; ( Int $lhs, Int $rhs &dash;&dash;&gt; Bool) {
 	return True if abs( $lhs - $rhs) ≤ 1
 }</code></pre>
 
-	    <pre class='fragment'><code>say "Casi " if 3 ≈ 2 ;</code></pre>
+	    <pre class='fragment'><code>say "Almost " if 3 ≈ 2 ;</code></pre>
 	  </section>
 	</section>
-	
+
 	<section> <!-- Funciones -->
-	  <section><h1>Emparejando patrones</h1>
+	  <section><h1>Pattern matching</h1>
+
+	    <pre class='fragment'><code>lucky :: (Integral a) => a -> String
+lucky 7 = "LUCKY NUMBER SEVEN!" 
+lucky x = "Sorry, you're out of luck, pal!" </code></pre>
 <pre><code>proto sub lucky (Int \a &dash;&dash;&gt; Str ) { *}
 multi sub lucky ( 7 ) {  "LUCKY NUMBER SEVEN!" }
 multi sub lucky ( $x where * ≠ 7 ) { "Sorry, you're out of luck, pal!" };
-				     
+
 say lucky 7 ;
 say lucky 33;</code></pre>
 <aside class='notes'>Prácticamente igual que http://learnyouahaskell.com/syntax-in-functions</aside>
