@@ -191,8 +191,30 @@ say lucky 7 ;
 say lucky 33;</code></pre>
 <aside class='notes'>Prácticamente igual que http://learnyouahaskell.com/syntax-in-functions</aside>
 	  </section>
-	  
-	  <section data-background='https://live.staticflickr.com/5188/5663370160_fc7840c00a_b_d.jpg'>
+
+	  <section><h1>Guard clauses</h1>
+	    <pre><code>    sayMe :: (Integral a) => a -> String  
+    sayMe 1 = "One!"  
+    sayMe 2 = "Two!"  
+    sayMe 3 = "Three!"  
+    sayMe 4 = "Four!"  
+    sayMe 5 = "Five!"  
+    sayMe x = "Not between 1 and 5"
+	    </code></pre>
+	  </section>
+
+	  <section><h1>Become much shorter...</h1>
+	    <pre><code>proto say-me( | ) returns Str {*};
+
+multi  say-me( \a where 1 &lt;= a &lt;= 5 ) returns Str {
+    return ( uniname( a.Str ).split(" " )[1]).lc.tc ~ "!";
+}
+multi say-me( \a ) returns Str { "Not between 1 and 5"}
+
+say-me(3).say;
+		say-me(33).say; </code></pre>
+	  </section>
+		<section data-background='https://live.staticflickr.com/5188/5663370160_fc7840c00a_b_d.jpg'>
 	    <h1><em>Funciones curry-adas</em></h1>
 	    <pre><code>sub mult-three( \a, \b, \c ) {
     return a * b * c;
