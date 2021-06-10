@@ -280,10 +280,10 @@ say apply-twice( "HAHA " ~ *, "HEY" );  # HAHA HAHA HEY
           <pre><code>multi sub maybe( &f, Nil ) { return Nil };
 multi sub maybe( &f, Just $x ) { return Just.new( f( $x() ) ) };
 
-my $treinta-y-tres = Just.new( -33 );
+my $thirty'n'three = Just.new( -33 );
 
 say maybe &abs, Nil;
-say (maybe &abs,  $treinta-y-tres )();
+say (maybe &abs,  $thirty'n'three )(); # Just 33
           </code></pre>
         </section>
 
@@ -291,8 +291,11 @@ say (maybe &abs,  $treinta-y-tres )();
           <pre><code># fmap (++ " HEY GUYS IM INSIDE THE JUST") (Just "Something serious.")
 multi sub fmap( &f, Nil ) { return Nil };
 multi sub fmap( &f, Just $x ) { return Just.new( f( $x() ) ) ;}
-say fmap * ~ " HEY GUYS IM INSIDE THE JUST", Just.new: "Something serious.";
-          </code></pre>
+multi sub fmap( &f, \x ) { return  f x  };
+
+my \inside = * ~ " HEY GUYS IM INSIDE THE JUST";
+say fmap inside, Just.new: "Something serious."; # Just Something serious. HEY GUYS IM INSIDE THE JUST
+say fmap inside, 33;          </code></pre>
         </section>
 
         </section>
