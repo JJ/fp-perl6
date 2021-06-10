@@ -37,9 +37,7 @@
 	      to check and compile, and makes programmers happier.</aside>
 	</section>
 
-	<section> <img
-    src='img/polyjj.png'
-    alt='selfie'>
+	<section data-background="img/polyjj.png">
           <aside
             class='notes'>¿Quién soy yo?. Programador en Perl desde
     1993, en Raku desde 2016. Documentador-en-jefe de Raku, aunque
@@ -91,11 +89,11 @@
           <section>
             <h1>List processing</h1>
 	    <pre><code>[x*2 | x &lt;- [1..10]]</code></pre>
-            <pre class="fragment"><code>(1..10).map( *²).say;</code></pre>
-	    <pre class='fragment'><code> [x*2 | x &lt;- [1..10], x*2 >= 12]  </code>
-            <pre class='fragment'><code>(1..10).map( *²).grep( * ≥ 12 ).say;</code></pre>
+            <pre class="fragment"><code>(1..10).map( *²).say; # Raku</code></pre>
+	    <pre class='fragment'><code>[x*2 | x &lt;- [1..10], x*2 >= 12]  </code></pre>
+            <pre class='fragment'><code>(1..10).map( *²).grep( * ≥ 12 ).say; # Raku</code></pre>
             <pre class='fragment'><code>1..10 ==> map( *²) ==> grep( * ≥ 12 ) ==> my @output;
-@output.join( " ⬖ ").put;</code></pre>
+@output.join( " ⬖ ").put; # Raku</code></pre>
 
             <aside class='notes'>Tomado de <a
         href='http://learnyouahaskell.com/starting-out#im-a-list-comprehension'>Learn
@@ -157,7 +155,8 @@ say &þor.^mro;
               son como roles abstractos.</aside>
           </section>
 
-	  <section><pre><code>role AlmostEq {
+	  <section><h1>Putting them to work</h1>
+              <pre><code>role AlmostEq {
     method  almost-equal( \rhs &dash;&dash;&gt; Bool) {...}
     method  almost-different( \rhs &dash;&dash;&gt; Bool) {...}
 }
@@ -236,9 +235,10 @@ say mult-two-with-nine 2, 3;</code></pre>
 
 	  <section><h1>Functions creating functions</h1>
 <pre><code>sub apply-twice( &f, \a ) { f( f ( a ) ) }
-say apply-twice( * + 3, 10 );
-say apply-twice( * ~ " HAHA" , "HEY" );
-say apply-twice( "HAHA " ~ *, "HEY" );</code></pre>
+say apply-twice( * + 3, 10 ); # 16
+say apply-twice( * ~ " HAHA" , "HEY" ); # HEY HAHA HAHA
+say apply-twice( "HAHA " ~ *, "HEY" );  # HAHA HAHA HEY
+</code></pre>
 
 <aside class='notes'>Una vez más, *, que crea código sobre la marcha,
   nos salva el trasero y permite acercarnos a la sintaxis de
@@ -250,9 +250,9 @@ say apply-twice( "HAHA " ~ *, "HEY" );</code></pre>
               de lambdas, pero estas son más explícitas.</aside>
           </section>
 
-          <section><h1>Function composition</h1>
-            <pre><code>say map( { ( { - $_ } ∘ &abs)($_) },  [5,-3,-6,7,-3,2,-19,24]) 
-            </code></pre>
+          <section><h1>Function composition <code>∘</code></h1>
+              <pre><code>say map( { ( { - $_ } ∘ &abs)($_) },  [5,-3,-6,7,-3,2,-19,24]) # (-5 -3 -6 -7 -3 -2 -19 -24)
+              </code></pre>
             <aside class='notes'>como no existe negate, usamos una
               lambda definida sobre la marcha. </aside>
           </section>
@@ -267,7 +267,7 @@ say apply-twice( "HAHA " ~ *, "HEY" );</code></pre>
     }
 
     method CALL-ME( |c ) {
-        return &!a();
+        return &!a( c );
     }
 }</code></pre>
           <aside class='notes'>La mejor forma que he encontrado es
